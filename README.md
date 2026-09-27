@@ -56,6 +56,6 @@ Full-page captures at 2× resolution are in `screenshots/`, numbered in demo ord
 | `06_manufacturer_price_check.png` | Price check before listing, self-ship vs Factory Node |
 | `07_manufacturer_demand_brief.png` | Top 12 districts and the suggested batch |
 | `08_manufacturer_batch_committed.png` | Demand-confirmed batch after commit |
-| `09_whatsapp_brief_tamil.png` | Tamil WhatsApp brief with one-tap commit |
+| `09_whatsapp_brief.png` | WhatsApp demand brief with one-tap commit |
 
 To recapture after changing the model, rebuild with `npm run build:single` and screenshot each `#/` route.

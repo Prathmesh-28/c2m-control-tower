@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
 import { CATEGORIES, ECONOMICS, GATE, PERSONA } from '../config.js';
 import { priceCheck, cashCycle } from '../lib/economics.js';
-import { demandBrief, batchPlan, whatsappBrief, whatsappConfirm, LANGS, QUICK_REPLIES } from '../lib/demand.js';
+import { demandBrief, batchPlan, whatsappBrief, whatsappConfirm, QUICK_REPLIES } from '../lib/demand.js';
+import meeshoIcon from '../assets/meesho-icon.png';
 import { categoryById, typeById } from '../lib/generate.js';
 import { setParams } from '../lib/router.js';
 import { num, pct, rupees } from '../lib/format.js';
@@ -25,7 +26,6 @@ export default function Maker({ pti, params }) {
   const [unitCost, setUnitCost] = useState(PERSONA.unitCost);
   const [mode, setMode] = useState('node');
   const [margin, setMargin] = useState(ECONOMICS.targetMarginB2B);
-  const [lang, setLang] = useState('ta');
   const [committed, setCommitted] = useState(false);
   const [waReply, setWaReply] = useState(null);
 
@@ -86,13 +86,19 @@ export default function Maker({ pti, params }) {
             <div className="phone-status"><span>9:41</span><span>4G ▮▮▮</span></div>
             {step !== 'whatsapp' ? (
               <div className="phone-head">
-                <div className="who">{sellerName}</div>
-                <div className="where">{cluster} · {cat.short} · C2M onboarding</div>
+                <img src={meeshoIcon} alt="Meesho" className="phone-logo" />
+                <div>
+                  <div className="who">{sellerName}</div>
+                  <div className="where">{cluster} · {cat.short} · C2M onboarding</div>
+                </div>
               </div>
             ) : (
               <div className="phone-head" style={{ background: '#075e54' }}>
-                <div className="who">Meesho C2M</div>
-                <div className="where">Business account · replies instantly</div>
+                <img src={meeshoIcon} alt="Meesho" className="phone-logo round" />
+                <div>
+                  <div className="who">Meesho C2M</div>
+                  <div className="where">Business account · replies instantly</div>
+                </div>
               </div>
             )}
             <div className="phone-tabs">
@@ -255,16 +261,13 @@ export default function Maker({ pti, params }) {
 
             {step === 'whatsapp' && (
               <div className="wa">
-                <div style={{ alignSelf: 'center' }}>
-                  <Seg label="Language" value={lang} onChange={(v) => { setLang(v); setWaReply(null); }} options={Object.entries(LANGS).map(([value, label]) => ({ value, label }))} />
-                </div>
                 <div className="wa-bubble">
-                  {waText(whatsappBrief({ lang, seller: sellerName, brief, batch }).join('\n'))}
+                  {waText(whatsappBrief({ seller: sellerName, brief, batch }).join('\n'))}
                   <span className="time">9:30 AM</span>
                 </div>
                 {waReply === null ? (
                   <div className="wa-quick">
-                    {QUICK_REPLIES[lang].map((q, i) => (
+                    {QUICK_REPLIES.map((q, i) => (
                       <button key={q} type="button" onClick={() => { setWaReply(i); if (i === 0) setCommitted(true); }}>{q}</button>
                     ))}
                   </div>
@@ -272,7 +275,7 @@ export default function Maker({ pti, params }) {
                   <>
                     <div className="wa-reply">{waReply + 1}</div>
                     <div className="wa-bubble">
-                      {waReply === 0 ? whatsappConfirm({ lang, batch, cluster }) : waReply === 1
+                      {waReply === 0 ? waText(whatsappConfirm({ batch, cluster })) : waReply === 1
                         ? 'Review the suggested size mix in your Demand Brief before committing. Open the Demand tab above.'
                         : 'Callback request recorded in this demo. No message was sent and no batch was committed.'}
                       <span className="time">9:31 AM</span>
@@ -361,12 +364,9 @@ export default function Maker({ pti, params }) {
               <Card className="explain" title="Step 4 · Reach the owner where they already work">
                 <p>
                   Cohort A owners run their business on WhatsApp and phone calls, not dashboards. The weekly brief arrives
-                  in Tamil, Hindi or English, and a batch is committed with a one-tap reply. No app install, no account
+                  as a WhatsApp message, and a batch is committed with a one-tap reply. No app install, no account
                   manager.
                 </p>
-              </Card>
-              <Card className="flat" title="Translation note">
-                <p className="small ink2">The Hindi and Tamil templates are working drafts. Have a native speaker check them before they appear in a submission or a pilot.</p>
               </Card>
             </>
           )}

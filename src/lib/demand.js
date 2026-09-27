@@ -89,40 +89,14 @@ export function batchPlan({ brief, listingPrice, minViablePrice = 0, seed = 1 })
   };
 }
 
-export const LANGS = { en: 'English', hi: 'हिन्दी', ta: 'தமிழ்' };
-
-export function whatsappBrief({ lang, seller, brief, batch, week = 40 }) {
+export function whatsappBrief({ seller, brief, batch, week = 40 }) {
   const top = brief.rows.slice(0, 3);
   const n = (x) => x.toLocaleString('en-IN');
   const band = (r) => `₹${r.priceBand[0]}–${r.priceBand[1]}`;
-  const product = brief.type.name;
-
-  if (lang === 'hi') {
-    return [
-      `📦 *C2M डिमांड ब्रीफ़* · सप्ताह ${week}`,
-      `${seller}, नमस्ते 🙏`,
-      `इस हफ़्ते *${product}* की सबसे ज़्यादा माँग:`,
-      ...top.map((r, i) => `${i + 1}. ${r.district} (${r.pin}xxx): ${n(r.weekly)} ऑर्डर/हफ़्ता · बिकने वाला दाम ${band(r)}`),
-      `सुझाया गया बैच: *${n(brief.suggested)} पीस*`,
-      `पक्के प्री-ऑर्डर अभी तक: *${n(batch.preOrders)}*`,
-      `बैच विंडो ${batch.windowDaysLeft} दिन में बंद होगी।`,
-    ];
-  }
-  if (lang === 'ta') {
-    return [
-      `📦 *C2M தேவை அறிக்கை* · வாரம் ${week}`,
-      `${seller}, வணக்கம் 🙏`,
-      `இந்த வாரம் *${product}* அதிக தேவை உள்ள இடங்கள்:`,
-      ...top.map((r, i) => `${i + 1}. ${r.district} (${r.pin}xxx): வாரத்திற்கு ${n(r.weekly)} ஆர்டர்கள் · விற்பனை விலை ${band(r)}`),
-      `பரிந்துரைக்கப்பட்ட பேட்ச்: *${n(brief.suggested)} யூனிட்கள்*`,
-      `இதுவரை உறுதியான முன்பதிவுகள்: *${n(batch.preOrders)}*`,
-      `பேட்ச் சாளரம் ${batch.windowDaysLeft} நாட்களில் முடிவடையும்.`,
-    ];
-  }
   return [
     `📦 *C2M Demand Brief* · Week ${week}`,
     `Hello ${seller} 🙏`,
-    `Top demand this week for *${product}*:`,
+    `Top demand this week for *${brief.type.name}*:`,
     ...top.map((r, i) => `${i + 1}. ${r.district} (${r.pin}xxx): ${n(r.weekly)} orders/week · sells at ${band(r)}`),
     `Suggested batch: *${n(brief.suggested)} units*`,
     `Confirmed pre-orders so far: *${n(batch.preOrders)}*`,
@@ -130,19 +104,9 @@ export function whatsappBrief({ lang, seller, brief, batch, week = 40 }) {
   ];
 }
 
-export function whatsappConfirm({ lang, batch, cluster }) {
+export function whatsappConfirm({ batch, cluster }) {
   const n = (x) => Math.round(x).toLocaleString('en-IN');
-  if (lang === 'hi') {
-    return `✅ बैच पक्का: ${n(batch.make)} पीस। ${batch.windowDaysLeft} दिन में ${cluster} फ़ैक्टरी नोड पर जमा करें। जमा करते ही ₹${n(batch.prepayment)} का भुगतान होगा।`;
-  }
-  if (lang === 'ta') {
-    return `✅ பேட்ச் உறுதி: ${n(batch.make)} யூனிட்கள். ${batch.windowDaysLeft} நாட்களுக்குள் ${cluster} ஃபேக்டரி நோடில் ஒப்படைக்கவும். ஒப்படைத்தவுடன் ₹${n(batch.prepayment)} செலுத்தப்படும்.`;
-  }
   return `✅ Batch committed: ${n(batch.make)} units. Hand over at the ${cluster} Factory Node within ${batch.windowDaysLeft} days. ₹${n(batch.prepayment)} is paid at handover.`;
 }
 
-export const QUICK_REPLIES = {
-  en: ['1 · Commit batch', '2 · Review sizes', '3 · Request callback'],
-  hi: ['1 · बैच पक्का करें', '2 · साइज़ देखें', '3 · कॉल का अनुरोध'],
-  ta: ['1 · பேட்சை உறுதிசெய்', '2 · அளவுகளைப் பார்', '3 · அழைப்பைக் கோர்'],
-};
+export const QUICK_REPLIES = ['1 · Commit batch', '2 · Review sizes', '3 · Request callback'];

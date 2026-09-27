@@ -11,6 +11,7 @@ import Experiment from './views/Experiment.jsx';
 import Health from './views/Health.jsx';
 import Maker from './views/Maker.jsx';
 import Method from './views/Method.jsx';
+import diceLogo from './assets/dice-s3-logo.png';
 
 const NAV = [
   { path: 'overview', label: 'Overview' },
@@ -43,7 +44,9 @@ export default function App() {
       <header className="topbar">
         <div className="topbar-row">
           <div className="brand">
-            <div className="brand-mark">C2M</div>
+            <a className="dice-logo" href={href('overview')} title="Meesho DICE Challenge Season 3 entry">
+              <img src={diceLogo} alt="Meesho DICE Challenge Season 3" />
+            </a>
             <div>
               <h1>C2M Control Tower</h1>
               <p>{TEAM.entry} · {TEAM.team}</p>
