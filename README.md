@@ -2,13 +2,20 @@
 
 Working React prototype for the Meesho DICE Challenge S3 Business Track detailed submission. It follows a fictional Tiruppur manufacturer from an initial price check to a demand brief, a confirmed batch, and daily seller health monitoring.
 
-**Live:** https://prathmesh-28.github.io/c2m-control-tower/
+**Live:** https://meesho-dice-c2m-iitb.vercel.app/
+(mirror: https://prathmesh-28.github.io/c2m-control-tower/)
 
 ## Deploy
 
-Every push to `main` runs the model tests, builds the site and publishes it to GitHub Pages
-(`.github/workflows/deploy.yml`). To update the live site, commit and push. There is no backend:
-the whole model runs in the browser, so there is nothing else to host.
+Every push to `main` updates both sites. Each one runs the model tests first, so a failing
+model never goes live:
+
+- **Vercel** (`vercel.json`): the Vercel project `meesho-dice-c2m-iitb` is connected to this
+  GitHub repo and builds on every push.
+- **GitHub Pages** (`.github/workflows/deploy.yml`): the Actions workflow builds and publishes.
+
+To update the live sites, commit and push. There is no backend: the whole model runs in the
+browser, so there is nothing else to host.
 
 The page carries a `noindex` tag so search engines skip it until judging is over. Remove the
 `robots` meta tag in `index.html` to allow indexing.
