@@ -6,9 +6,10 @@ import { demandBrief, batchPlan, whatsappBrief, whatsappConfirm, whatsappTopUp, 
 import { addDays, advanceTiming, avgTransit, batchDates, daysBetween, fmtDate, fmtDay, fmtRange, nextCutoff, nodeFlow, sizing, splitBy, zoneFor } from '../lib/operations.js';
 import meeshoIcon from '../assets/meesho-icon.png';
 import { categoryById, typeById } from '../lib/generate.js';
-import { href, setParams } from '../lib/router.js';
+import { setParams } from '../lib/router.js';
 import { num, pct, rupees } from '../lib/format.js';
 import { Card, Chip, Seg, waText } from '../components/ui.jsx';
+import MakerIntro from './MakerIntro.jsx';
 
 const STEPS = [
   { id: 'price', label: 'Price check' },
@@ -91,9 +92,10 @@ export default function Maker({ pti, params }) {
 
   return (
     <div>
+      <MakerIntro />
       <div className="page-head">
         <div>
-          <div className="eyebrow">Module 4 · The manufacturer’s side</div>
+          <div className="eyebrow">Module 2 · The manufacturer’s side</div>
           <h2>Made-to-Meesho: what the factory owner sees</h2>
           <p className="lede">
             An offline B2B manufacturer asks three things before listing: will I make money at these prices, is there
@@ -453,7 +455,6 @@ export default function Maker({ pti, params }) {
                 <Barrier t={`1,000 pre-orders take ${basePlan.fill1000.toFixed(0)} days`} d={`In 3 days they would need ${pct(basePlan.shareFor(1000, 3))} of these districts’ demand, more than the ${pct(EXPERIMENT.impressionCap)} of impressions all badged factories share.`} />
                 <Barrier t={`A week gives ${num(basePlan.preOrders)} + 15% = ${num(basePlan.preOrders + basePlan.buffer)}`} d={`${basePlan.clearsMinRun ? `Above the ${OPS.minRun}-piece minimum` : `Made up to the ${OPS.minRun}-piece minimum, the extra ${num(basePlan.toNode)} packs for node stock`}, and no buyer waits more than ${basePlan.wait.max} days for the node to ship (${basePlan.wait.avg.toFixed(0)} on average).`} />
                 <Barrier t={isPersona ? 'The deck’s 1,000 is a later week' : 'When the week reaches 1,000'} d={`${isPersona ? 'Kavin’s' : 'This factory’s'} week reaches 1,000 at a ${pct(basePlan.shareFor(1000, 7), 1)} share. Above that, two cut-offs a week (Monday and Thursday) keep the wait under a week.`} />
-                <div className="row mt"><a className="btn" href={href('ops')}>Batch operations, day by day →</a></div>
               </Card>
               <Card title="Where returns go" sub={`${num(ledger.returns)} returns and ${num(ledger.failed)} failed deliveries on this batch`}>
                 <Barrier t="Returns end at the node, not at the factory" d={`Valmo brings every return to the ${cluster} Factory Node. The factory never handles a single return.`} />

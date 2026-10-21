@@ -1,0 +1,143 @@
+<header class="fx-intro">
+  <div class="ey">Module 3 · Factory Node</div>
+  <h2>Shared inventory: where every pack is, where it goes next, and when to pull from the factory</h2>
+  <p>The factory and the Factory Node share the storage. The factory keeps the bulk of its stock at its own unit; the node keeps only a few days’ worth near the buyers. Four rules decide how much sits where, and when stock moves.</p>
+</header>
+
+<section class="fx" aria-labelledby="fx-h">
+  <div class="ms-title"><span class="k">How it works</span><h3 id="fx-h">Stock is split, so the factory never carries it all and the node never holds too much</h3></div>
+
+  <div class="fx-flow">
+    <article class="fx-st fac">
+      <div class="fx-pic"><img src="%%IMG_FACTORY%%" alt="" /></div>
+      <div class="fx-tx">
+        <span class="fx-role">Stores the bulk</span>
+        <h4>Factory</h4>
+        <ul><li>Reserve stock from its own runs</li><li>This week’s batch, while it is made</li><li>Packs sent back: not fit, or over 45 days</li></ul>
+      </div>
+      <div class="fx-who"><span>Owner <b>Factory</b></span><span>Held by <b>Factory</b></span></div>
+    </article>
+
+    <div class="fx-link" aria-hidden="true">
+      <div class="fx-arr fwd"><span>Weekly truck: batch + top-up</span></div>
+      <div class="fx-arr fwd hot"><span>Emergency pickup if a size runs low</span></div>
+      <div class="fx-arr back"><span>Unfit and aged packs</span></div>
+    </div>
+
+    <article class="fx-st node">
+      <div class="fx-pic"><img src="%%IMG_NODE%%" alt="" /></div>
+      <div class="fx-tx">
+        <span class="fx-role">Holds only a few days</span>
+        <h4>Factory Node</h4>
+        <ul><li>About 10 days of stock to sell</li><li>Pre-orders waiting for Monday’s dispatch</li><li>Returns being graded (2 days)</li></ul>
+      </div>
+      <div class="fx-who"><span>Owner <b>Factory</b></span><span>Held by <b>Node partner</b>, insured</span></div>
+    </article>
+
+    <div class="fx-link" aria-hidden="true">
+      <div class="fx-arr fwd"><span>Every order packed and shipped</span></div>
+      <div class="fx-arr back"><span>Failed deliveries and returns</span></div>
+    </div>
+
+    <article class="fx-st out">
+      <div class="fx-pic"><img src="%%IMG_BUYER%%" alt="" /></div>
+      <div class="fx-tx">
+        <span class="fx-role">Last mile</span>
+        <h4>Valmo → buyer</h4>
+        <ul><li>Parcels on the road, 3–8 days</li><li>Failed deliveries coming back</li><li>Buyer returns within 7 days</li></ul>
+      </div>
+      <div class="fx-who"><span>Owner <b>Buyer</b> on delivery</span><span>Held by <b>Valmo</b></span></div>
+    </article>
+  </div>
+
+  <div class="fx-rules">
+    <article class="fx-rule">
+      <div class="fx-rh"><span class="fx-n">1</span><span class="fx-tag node">At the node</span></div>
+      <h4>Target stock</h4>
+      <p class="fx-q">How much should sit at the node?</p>
+      <div class="fx-f">node orders a day × (days to next truck + 1 day on the road + safety days)</div>
+      <div class="fx-eg"><b>Kavin</b> 67 × (7 + 1 + 2) = <b>670 packs</b>. Everything above that stays at the factory.</div>
+    </article>
+    <article class="fx-rule">
+      <div class="fx-rh"><span class="fx-n">2</span><span class="fx-tag move">Factory → node</span></div>
+      <h4>Weekly top-up</h4>
+      <p class="fx-q">When do we take stock from the factory?</p>
+      <div class="fx-f">top-up = target − (node stock + on the way − 1 day of orders)</div>
+      <div class="fx-eg"><b>Kavin, Sun 1 Nov</b> 308 packs, split by size. Sent on WhatsApp Saturday, approved with one tap, carried with the batch.</div>
+    </article>
+    <article class="fx-rule">
+      <div class="fx-rh"><span class="fx-n">3</span><span class="fx-tag hot">Same-day pickup</span></div>
+      <h4>Emergency pickup</h4>
+      <p class="fx-q">What if a size runs out early?</p>
+      <div class="fx-f">if a size’s stock + tomorrow’s arrivals &lt; 1.2 days of recent orders → pick up today</div>
+      <div class="fx-eg"><b>Festival week, Fri 30 Oct</b> S and XL fell low; 134 packs picked up, no order missed.</div>
+    </article>
+    <article class="fx-rule">
+      <div class="fx-rh"><span class="fx-n">4</span><span class="fx-tag all">Everywhere</span></div>
+      <h4>Ownership and ageing</h4>
+      <p class="fx-q">Who owns it, and what if it doesn’t sell?</p>
+      <div class="fx-age"><span class="a"><b>0–29 days</b>sell, oldest first</span><span class="b"><b>30 days</b>marked down</span><span class="c"><b>45 days</b>back to factory</span></div>
+      <div class="fx-eg">The factory owns every pack. Each hand-over (transporter, node partner, Valmo) is signed, so liability is always clear.</div>
+    </article>
+  </div>
+  <a class="fx-try" href="#sx-h">See how the node’s location is chosen ↓</a>
+</section>
+
+<section class="sx" aria-labelledby="sx-h">
+  <div class="ms-title"><span class="k">Choosing the node</span><h3 id="sx-h">Where a Factory Node goes: follow the manufacturers</h3><p>A node only pays off where many registered manufacturers sit close together. So the location is picked in three steps, from the whole country down to one street.</p></div>
+
+  <ol class="sx-steps">
+    <li><span class="n">1</span><div><b>Find the dense clusters</b><span>Map every manufacturer registered or screened by Meesho: 11,645 factories in 12 clusters.</span></div></li>
+    <li><span class="n">2</span><div><b>Score each cluster</b><span>Five weighted criteria, rated 1–5. The top two are piloted first; the rest open by rank.</span></div></li>
+    <li><span class="n">3</span><div><b>Pick the exact site</b><span>Inside the cluster, the warehouse goes where the most manufacturers are within a short truck ride.</span></div></li>
+  </ol>
+
+  <div class="sx-row">
+    <div class="sx-card sx-mapcard">
+      <div class="sx-ch"><span class="n">1</span><div><b>Where the manufacturers are</b><span>Bubble size = manufacturers registered or screened. Click a cluster.</span></div></div>
+      <div class="sx-map" id="sx-map"><img src="%%IMG_MAP%%" alt="Map of India" /></div>
+      <div class="sx-pop" id="sx-info" aria-live="polite"></div>
+      <div class="sx-leg"><span><i class="p"></i>Pilot</span><span><i class="w2"></i>Wave 2</span><span><i class="w3"></i>Wave 3</span><span><i class="nn"></i>Not now</span></div>
+    </div>
+    <div class="sx-card">
+      <div class="sx-ch"><span class="n">2</span><div><b>Score each cluster</b><span>Cluster score = Σ weight × rating (1–5). Weights from an AHP survey; consistency ratio 0.016.</span></div></div>
+      <div class="sx-crit" id="sx-crit"></div>
+      <div class="mc-tw"><table class="mc-t sx-score"><thead><tr><th>Cluster</th><th class="num">Cost<small>0.34</small></th><th class="num">Demand<small>0.26</small></th><th class="num">Returns<small>0.18</small></th><th class="num">Node<small>0.14</small></th><th class="num">Partner<small>0.08</small></th><th class="num">Score</th></tr></thead><tbody id="sx-tb"></tbody></table></div>
+      <div class="sx-pick" id="sx-pick"></div>
+    </div>
+  </div>
+
+  <div class="sx-card sx-site">
+    <div class="sx-ch"><span class="n">3</span><div><b>Pick the exact site inside the cluster · Tiruppur example</b><span>Each dot is a manufacturer registered on Meesho. Shading shows how many are in each 5 km square. Click a candidate site to compare.</span></div></div>
+    <div class="sx-siterow">
+      <div class="sx-svgwrap"><svg id="sx-svg" viewBox="0 0 600 380" role="img" aria-label="Manufacturers around Tiruppur and three candidate node sites"></svg></div>
+      <div class="sx-side">
+        <div class="sx-cands" id="sx-cands" role="tablist"></div>
+        <div id="sx-cmp"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sx-rule">
+    <div><b>Open a node in a cluster when</b><ul><li>its cluster score puts it in the next wave</li><li>at least <b>40 registered manufacturers</b> that pass the price check sit within 20 km</li><li>a Valmo lane already serves the area</li></ul></div>
+    <div><b>Put it where</b><ul><li>the <b>most manufacturers are within 15 km</b>, so trucks are short</li><li>the average trip from a factory is shortest</li><li>it is within 5 km of the highway to the Valmo hub</li></ul></div>
+    <div><b>Add a second site when</b><ul><li>the first runs above <b>70% full</b> for 4 weeks (the deck’s node KPI)</li><li>about 3 sites per cluster by Year 4, at ₹1.3 cr each</li></ul></div>
+  </div>
+</section>
+
+
+<section id="fn">
+  <div class="ms-title"><span class="k">Prototype</span><h3>The node’s inventory screen, by category</h3><p>The node stores packs for a few days before they go to buyers. Start with the categories, open one to see its products, and for each one what is left to sell, what is coming in and what is going out today. Past days are in History.</p></div>
+  <div class="mc-app">
+    <div class="mc-top">
+      <span class="lg">N</span>
+      <div><b>Tiruppur Factory Node · Avinashi Road</b><div class="wk">Partner 3PL · 7 categories · factories across western Tamil Nadu</div></div>
+    </div>
+    <div class="fy-tabs" role="tablist" id="fy-tabs">
+      <button type="button" role="tab" data-t="today" class="on" aria-selected="true">Today</button>
+      <button type="button" role="tab" data-t="hist" aria-selected="false">History</button>
+    </div>
+    <div class="fy-main" id="fy-main" aria-live="polite"></div>
+    <div class="mc-foot">Synthetic data with the batch-operations rules (weekly truck per category, pre-orders + 15% buffer, top-up to 10 days of stock). Factory names are fictional. Stationery is added beyond the deck’s 12 screened categories. “Today” is Mon, 26 Oct 2026.</div>
+  </div>
+</section>

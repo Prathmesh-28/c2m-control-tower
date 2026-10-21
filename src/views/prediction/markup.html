@@ -1,0 +1,97 @@
+<!-- HERO -->
+<section class="ms-hero">
+  <div>
+    <div class="ey">Meesho’s side · Predicting demand</div>
+    <h2>How Meesho joins <em>what buyers want</em> with <em>what factories make</em>, and tells each factory how much to make</h2>
+    <p>Meesho already sees every search, cart, order and return. Factories give it their catalogue and capacity. Meesho maps both to the same product, predicts demand by district and size, splits it across the right factories, and checks every week whether the numbers it gave were right. It also uses last year’s sales, so festivals and seasons are built in.</p>
+  </div>
+  <div class="ms-join">
+    <figure><img src="%%IMG_BUYER%%" alt="" /><figcaption>Buyer demand<span>searches, orders, returns</span></figcaption></figure>
+    <div class="ar" aria-hidden="true">→</div>
+    <div class="mid"><img src="%%IMG_MEESHO%%" alt="" /><b>Meesho</b><span>match · predict · check</span></div>
+    <div class="ar" aria-hidden="true">←</div>
+    <figure><img src="%%IMG_FACTORY%%" alt="" /><figcaption>Factory catalogue<span>products, capacity, cost</span></figcaption></figure>
+    <div class="out"><b>Out comes a weekly brief per factory:</b> make this product, in these sizes, this many, for these districts, at this price band.</div>
+  </div>
+</section>
+
+<section class="pr" id="pr-data" aria-labelledby="pr1-h">
+  <div class="ms-title"><span class="k">1 · What Meesho reads</span><h3 id="pr1-h">Three kinds of data in, four engines, five decisions out</h3><p>Meesho already holds all of this: what buyers do today, what sold in the past, and what each manufacturer can make. Hover over any box to see where it goes.</p></div>
+  <div class="pr-box">
+    <div class="pr-cols" aria-hidden="true"><span>Data Meesho has</span><span>Engines</span><span>Decisions for each manufacturer</span></div>
+    <svg class="pr-svg" id="pr-svg" viewBox="0 0 1120 712" role="img" aria-label="Data sources feed four engines which make five decisions"></svg>
+    <div class="pr-list" id="pr-list"></div>
+  </div>
+
+  <div class="pr-eq-wrap">
+    <div class="pr-eq-h"><b>How next week’s demand is predicted</b><span>for one product in one district · live example from the console below</span>
+      <select class="mc-sel" id="pr-p" aria-label="Product"></select><select class="mc-sel" id="pr-d" aria-label="District"></select></div>
+    <div class="pr-eq" id="pr-eq"></div>
+  </div>
+</section>
+<section id="console">
+  <div class="ms-title"><span class="k">2 · The working prototype</span><h3>The Demand Console</h3></div>
+  <div class="mc-head">
+    <div>
+      <div class="ey">Module 4 · Prototype</div>
+      <h2>Meesho Demand Console</h2>
+      <p>One week of the prediction loop, as Meesho’s category team would see it. Press <b>Run</b> to move to the next step, or click any step. The rules sit behind ⚙ Rules: change one and every number recalculates.</p>
+    </div>
+  </div>
+  <div class="mc-app">
+    <div class="mc-top">
+      <span class="lg">m</span>
+      <div><b>C2M Demand Console</b><div class="wk">Week 43 · 19–25 Oct 2026 · Tiruppur, Panipat, Ludhiana, Jagadhri clusters</div></div>
+      <span class="sp"></span>
+      <button type="button" id="mc-setbtn" aria-expanded="false">⚙ Rules</button>
+      <button type="button" id="mc-reset">↺ Restart week</button>
+    </div>
+    <div class="mc-runner" id="mc-runner"></div>
+    <div class="mc-set" id="mc-set" style="margin:12px 16px 0"></div>
+    <div class="mc-body">
+      <nav class="mc-nav" id="mc-nav" aria-label="Console sections"></nav>
+      <div class="mc-main" id="mc-main" aria-live="polite"></div>
+    </div>
+    <div class="mc-foot">Synthetic data from a fixed seed: 6 products, 12 districts, 10 factories, 8 weeks of history. Factory names are fictional.</div>
+  </div>
+</section>
+
+
+<section class="pr" id="pr-idx" aria-labelledby="pr3-h">
+  <div class="ms-title"><span class="k">3 · How Meesho judges each manufacturer</span><h3 id="pr3-h">Four indexes, and the rule that turns them into a share of demand</h3><p>Every manufacturer is read the same way, every day, from data, not from a category manager’s judgement.</p></div>
+
+  <div class="pr-idx">
+    <article class="pr-card">
+      <div class="pr-ch"><span class="ic" aria-hidden="true">₹</span><div><span class="q">Is the manufacturer really cheaper?</span><h4>Price Truth Index</h4></div></div>
+      <div class="mc-formula">gap = (median price buyers paid − factory’s lowest viable price) ÷ median, per product</div>
+      <div class="pr-vis" id="pr-pti"></div>
+      <dl><div><dt>Pass</dt><dd>≥ 8% below the median on ≥ 60% of live products</dd></div><div><dt>Decides</dt><dd>The “sold by the manufacturer” badge, and whether it can get demand at all</dd></div></dl>
+      <div class="pr-links"><button type="button" data-go="catalog">See in console →</button></div>
+    </article>
+    <article class="pr-card">
+      <div class="pr-ch"><span class="ic" aria-hidden="true">♥</span><div><span class="q">Does the manufacturer keep its promises?</span><h4>Seller Health Score</h4></div></div>
+      <div class="pr-w" aria-label="Signal weights"><div style="flex:30">Price edge 30%</div><div style="flex:25">Order pace 25%</div><div style="flex:20">Returns 20%</div><div style="flex:15">On-time 15%</div><div style="flex:10">Stock 10%</div></div>
+      <div class="pr-stages"><span>Allocate</span><i>→</i><span>Diagnose</span><i>→</i><span class="w">Remedy</span><i>→</i><span class="g">Graduate</span></div>
+      <dl><div><dt>Pass</dt><dd>80+ for 30 days graduates; under 40 after a fix goes to a person</dd></div><div><dt>Decides</dt><dd>The size of its share, and which automatic fix runs</dd></div></dl>
+      <div class="pr-links"><button type="button" data-go="matrix">Seller behaviour matrix →</button></div>
+    </article>
+    <article class="pr-card">
+      <div class="pr-ch"><span class="ic" aria-hidden="true">◎</span><div><span class="q">Did it get the right demand?</span><h4>Forecast accuracy</h4></div></div>
+      <div class="mc-formula">gap = (what sold − the brief) ÷ the brief, per product, district and size</div>
+      <div class="pr-band"><div class="b"><i style="left:0;width:35%" class="lo"></i><i style="left:35%;width:30%" class="ok"></i><i style="left:65%;width:35%" class="hi"></i></div><div class="l"><span>Over-forecast</span><span>±15% on target</span><span>Under-forecast</span></div></div>
+      <dl><div><dt>Pass</dt><dd>Sales within ±15% of the brief</dd></div><div><dt>Decides</dt><dd>Next week’s brief is cut or raised; the size mix shifts</dd></div></dl>
+      <div class="pr-links"><button type="button" data-go="review">See in console →</button></div>
+    </article>
+    <article class="pr-card">
+      <div class="pr-ch"><span class="ic" aria-hidden="true">⚖</span><div><span class="q">Does it work for buyers and Meesho?</span><h4>Day-30 readout</h4></div></div>
+      <div class="pr-ab"><div><span>Badged factories</span><b>+18.2%</b></div><div><span>vs matched holdout</span><b class="m">0%</b></div></div>
+      <dl><div><dt>Pass</dt><dd>Sales per live product beat the holdout by ≥ 12%; 70% still clear the gate at day 14</dd></div><div><dt>Decides</dt><dd>Fund more clusters and nodes, tighten the gate, or stop</dd></div></dl>
+      
+    </article>
+  </div>
+
+  <div class="pr-split">
+    <div class="pr-split-h"><b>Who gets how much demand</b><span>The same four steps for every manufacturer, every week · live example:</span><select class="mc-sel" id="pr-f" aria-label="Manufacturer"></select></div>
+    <div class="pr-flow" id="pr-flow"></div>
+  </div>
+</section>

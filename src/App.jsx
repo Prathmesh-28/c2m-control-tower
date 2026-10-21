@@ -1,51 +1,37 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { GATE, TEAM } from './config.js';
 import { generateMarket } from './lib/generate.js';
 import { runPTI } from './lib/pti.js';
-import { generateCohort, cohortSummary } from './lib/health.js';
-import { runExperiment } from './lib/experiment.js';
 import { useRoute, href } from './lib/router.js';
 import Overview from './views/Overview.jsx';
-import PriceTruth from './views/PriceTruth.jsx';
-import Experiment from './views/Experiment.jsx';
-import Health from './views/Health.jsx';
 import Maker from './views/Maker.jsx';
-import Method from './views/Method.jsx';
-import Buyer from './views/Buyer.jsx';
-import Business from './views/Business.jsx';
-import Operations from './views/Operations.jsx';
-import Flow from './views/Flow.jsx';
+import FactoryNode from './views/FactoryNode.jsx';
+import Prediction from './views/Prediction.jsx';
 import diceLogo from './assets/dice-s3-logo.png';
 
 const NAV = [
-  { path: 'overview', label: 'Overview' },
-  { path: 'flow', label: 'End-to-end flow' },
-  { path: 'pti', label: 'Price Truth Index', num: 1 },
-  { path: 'experiment', label: 'Day-30 readout', num: 2 },
-  { path: 'health', label: 'Seller Health', num: 3 },
-  { path: 'maker', label: 'Manufacturer app', num: 4 },
-  { path: 'buyer', label: 'Buyer pre-order', num: 5 },
-  { path: 'ops', label: 'Batch operations', num: 6 },
-  { path: 'business', label: 'Finance analysis', num: 7 },
-  { path: 'method', label: 'Scale-up & road map' },
+  { path: 'overview', label: 'Overview', num: 1 },
+  { path: 'maker', label: 'Manufacturer app', num: 2 },
+  { path: 'node', label: 'Factory Node', num: 3 },
+  { path: 'prediction', label: 'Prediction', num: 4 },
 ];
 
 export default function App() {
   const route = useRoute();
-  const [gate, setGate] = useState(GATE);
 
+  // The Manufacturer app's price check reads category medians from the (synthetic) market.
   const market = useMemo(() => generateMarket(), []);
-  const pti = useMemo(() => runPTI(market, gate), [market, gate]);
-  const cohort = useMemo(() => generateCohort(), []);
-  const summary = useMemo(() => cohortSummary(cohort), [cohort]);
-  const baseRun = useMemo(() => runExperiment(pti, gate, 'base'), [pti, gate]);
+  const pti = useMemo(() => runPTI(market, GATE), [market]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [route.path]);
 
-  const shared = { gate, setGate, market, pti, cohort, summary, baseRun, params: route.params };
-  const View = { overview: Overview, flow: Flow, pti: PriceTruth, experiment: Experiment, health: Health, maker: Maker, buyer: Buyer, ops: Operations, business: Business, method: Method }[route.path] ?? Overview;
+  const shared = { pti, params: route.params };
+  const VIEWS = { overview: Overview, maker: Maker, node: FactoryNode, prediction: Prediction };
+  // Old links to removed screens land on the Overview.
+  const path = VIEWS[route.path] ? route.path : 'overview';
+  const View = VIEWS[path];
 
   return (
     <>
@@ -67,7 +53,7 @@ export default function App() {
         </div>
         <nav className="nav" aria-label="Sections">
           {NAV.map((n) => (
-            <a key={n.path} href={href(n.path)} className={route.path === n.path ? 'active' : ''}>
+            <a key={n.path} href={href(n.path)} className={path === n.path ? 'active' : ''}>
               {n.num && <span className="num">{n.num}</span>}
               {n.label}
             </a>
