@@ -60,7 +60,8 @@ export default function App() {
           ))}
         </nav>
       </header>
-      <main>
+      {/* Keyed by screen so each one plays its entrance (src/motion.css). */}
+      <main key={path} className="m-page">
         <View {...shared} />
       </main>
       <footer className="footer">

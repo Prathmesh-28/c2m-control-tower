@@ -70,6 +70,18 @@ function SecTitle({ k, title, children }) {
 }
 
 // Four players, two flows: information (plum, dashed) and goods (orange).
+// The paths the moving parcels and pulses follow, with seconds per trip; they match the arrows below.
+const GOODS_PATHS = [
+  ['M 335 432 L 438 432', 2.2],
+  ['M 740 432 L 843 432', 2.2],
+  ['M 843 478 L 740 478', 3],
+];
+const INFO_PATHS = [
+  ['M 1010 352 C 1010 250, 1000 150, 940 110', 2.6],
+  ['M 260 110 C 190 140, 170 230, 170 352', 2.6],
+  ['M 265 352 C 290 270, 310 215, 340 170', 2.2],
+];
+
 function SolutionMap() {
   return (
     <svg className="fd-map" viewBox="0 0 1180 590" role="img" aria-label="Factory Direct system diagram">
@@ -121,6 +133,22 @@ function SolutionMap() {
       <text x="792" y="414" className="g-l">⑦ Valmo</text>
       <path d="M 843 478 L 740 478" className="ln-o dash" markerEnd="url(#ah-o)" />
       <text x="792" y="500" className="g-l sm">returns</text>
+
+      {/* moving flows: shown only when motion is on (src/motion.css) */}
+      <g className="flow" aria-hidden>
+        {GOODS_PATHS.map(([d, dur], i) => [0, 0.5].map((off) => (
+          <g key={`${i}-${off}`}>
+            <rect className="pkt" x="-8" y="-8" width="16" height="16" rx="3" />
+            <rect className="pkt-tape" x="-2" y="-8" width="4" height="16" />
+            <animateMotion dur={`${dur}s`} begin={`${-off * dur}s`} repeatCount="indefinite" path={d} />
+          </g>
+        )))}
+        {INFO_PATHS.map(([d, dur], i) => (
+          <circle key={i} className="pulse" r="5">
+            <animateMotion dur={`${dur}s`} repeatCount="indefinite" path={d} />
+          </circle>
+        ))}
+      </g>
 
       {/* legend */}
       <g className="leg">
